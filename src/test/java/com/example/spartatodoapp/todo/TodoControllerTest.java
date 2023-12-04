@@ -43,7 +43,7 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 
         // then
         action.andExpect(status().isCreated());
-        verify(todoService, times(1)).createTodo(any(TodoRequestDTO.class), eq(TEST_USER));
+        verify(todoService, times(1)).createTodo(any(TodoRequestDto.class), eq(TEST_USER));
     }
 
 

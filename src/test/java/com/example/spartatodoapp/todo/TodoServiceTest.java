@@ -60,7 +60,7 @@ class TodoServiceTest implements TodoTest {
         var result = todoService.getTodoDto(TEST_TODO_ID);
 
         // then
-        assertThat(result).isEqualTo(new TodoResponseDTO(testTodo));
+        assertThat(result).isEqualTo(new TodoResponseDto(testTodo));
     }
 
     @DisplayName("할일 리스트 맵 (최신순 정렬)")
