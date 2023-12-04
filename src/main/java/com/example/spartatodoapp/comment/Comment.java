@@ -3,7 +3,6 @@ package com.example.spartatodoapp.comment;
 import java.time.LocalDateTime;
 
 import com.example.spartatodoapp.todo.Todo;
-import com.example.spartatodoapp.todo.TodoRequestDTO;
 import com.example.spartatodoapp.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -37,7 +36,7 @@ public class Comment {
     @Column
     private LocalDateTime createDate;
 
-    public Comment(CommentRequestDTO dto) {
+    public Comment(CommentRequestDto dto) {
         this.text = dto.getText();
         this.createDate = LocalDateTime.now();
     }

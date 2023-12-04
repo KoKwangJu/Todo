@@ -1,16 +1,11 @@
 package com.example.spartatodoapp.comment;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.RejectedExecutionException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,11 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.spartatodoapp.CommonResponseDto;
-import com.example.spartatodoapp.todo.TodoListResponseDTO;
-import com.example.spartatodoapp.todo.TodoRequestDTO;
-import com.example.spartatodoapp.todo.TodoResponseDTO;
-import com.example.spartatodoapp.todo.TodoService;
-import com.example.spartatodoapp.user.UserDTO;
 import com.example.spartatodoapp.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 
@@ -35,16 +25,16 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping
-    public ResponseEntity<CommentResponseDTO> postComment(@RequestBody CommentRequestDTO commentRequestDTO, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        CommentResponseDTO responseDTO = commentService.createComment(commentRequestDTO, userDetails.getUser());
+    public ResponseEntity<CommentResponseDto> postComment(@RequestBody CommentRequestDto commentRequestDTO, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        CommentResponseDto responseDTO = commentService.createComment(commentRequestDTO, userDetails.getUser());
 
         return ResponseEntity.status(201).body(responseDTO);
     }
 
     @PutMapping("/{commentId}")
-    public ResponseEntity<CommonResponseDto> putComment(@PathVariable Long commentId, @RequestBody CommentRequestDTO commentRequestDTO, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<CommonResponseDto> putComment(@PathVariable Long commentId, @RequestBody CommentRequestDto commentRequestDTO, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         try {
-            CommentResponseDTO responseDTO = commentService.updateComment(commentId, commentRequestDTO, userDetails.getUser());
+            CommentResponseDto responseDTO = commentService.updateComment(commentId, commentRequestDTO, userDetails.getUser());
             return ResponseEntity.ok().body(responseDTO);
         } catch (RejectedExecutionException | IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(new CommonResponseDto(ex.getMessage(), HttpStatus.BAD_REQUEST.value()));

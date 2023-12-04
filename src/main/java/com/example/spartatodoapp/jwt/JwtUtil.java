@@ -78,11 +78,11 @@ public class JwtUtil {
         // 토큰 만료시간 60분
         long TOKEN_TIME = 60 * 60 * 1000;
         return BEARER_PREFIX +
-                Jwts.builder()
-                        .setSubject(username)
-                        .setExpiration(new Date(date.getTime() + TOKEN_TIME))
-                        .setIssuedAt(date)
-                        .signWith(key, signatureAlgorithm)
-                        .compact();
+            Jwts.builder()
+                .setSubject(username)
+                .setExpiration(new Date(date.getTime() + TOKEN_TIME))
+                .setIssuedAt(date)
+                .signWith(key, signatureAlgorithm)
+                .compact();
     }
 }

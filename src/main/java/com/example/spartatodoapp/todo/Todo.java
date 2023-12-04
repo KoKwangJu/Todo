@@ -1,5 +1,6 @@
 package com.example.spartatodoapp.todo;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -13,13 +14,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
 @NoArgsConstructor
-public class Todo {
+@EqualsAndHashCode
+public class Todo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -43,7 +47,13 @@ public class Todo {
     @OneToMany(mappedBy = "todo")
     private List<Comment> comments;
 
-    public Todo(TodoRequestDTO dto) {
+    @Builder
+    public Todo(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+    public Todo(TodoRequestDto dto) {
         this.title = dto.getTitle();
         this.content = dto.getContent();
         this.createDate = LocalDateTime.now();

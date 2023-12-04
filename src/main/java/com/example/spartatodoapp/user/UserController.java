@@ -29,7 +29,7 @@ public class UserController {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED.value())
-                .body(new CommonResponseDto("회원가입 성공", HttpStatus.CREATED.value()));
+            .body(new CommonResponseDto("회원가입 성공", HttpStatus.CREATED.value()));
     }
 
     @PostMapping("/login")

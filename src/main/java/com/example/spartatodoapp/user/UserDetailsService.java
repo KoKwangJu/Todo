@@ -1,5 +1,6 @@
 package com.example.spartatodoapp.user;
 
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ public class UserDetailsService {
 
     public UserDetailsImpl getUserDetails(String username) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Not Found" + username));
+            .orElseThrow(() -> new UsernameNotFoundException("Not Found" + username));
         return new UserDetailsImpl(user);
     }
 

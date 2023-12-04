@@ -1,5 +1,6 @@
 package com.example.spartatodoapp.jwt;
 
+import com.example.spartatodoapp.CommonResponseDto;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -8,14 +9,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.example.spartatodoapp.CommonResponseDto;
 import com.example.spartatodoapp.user.UserDetailsImpl;
 import com.example.spartatodoapp.user.UserDetailsService;
-import com.example.spartatodoapp.user.UserService;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -33,7 +31,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         String token = jwtUtil.resolveToken(request);
 
         if(Objects.nonNull(token)) {

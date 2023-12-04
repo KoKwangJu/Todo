@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.spartatodoapp.user.User;
-import com.example.spartatodoapp.user.UserDTO;
+import com.example.spartatodoapp.user.UserDto;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -19,28 +19,28 @@ import lombok.RequiredArgsConstructor;
 public class TodoService {
     private final TodoRepository todoRepository;
 
-    public TodoResponseDTO createTodo(TodoRequestDTO dto, User user) {
+    public TodoResponseDto createTodo(TodoRequestDto dto, User user) {
         Todo todo = new Todo(dto);
         todo.setUser(user);
 
-        todoRepository.save(todo);
+        var saved = todoRepository.save(todo);
 
-        return new TodoResponseDTO(todo);
+        return new TodoResponseDto(saved);
     }
 
-    public TodoResponseDTO getTodoDto(Long todoId) {
+    public TodoResponseDto getTodoDto(Long todoId) {
         Todo todo = getTodo(todoId);
-        return new TodoResponseDTO(todo);
+        return new TodoResponseDto(todo);
     }
 
-    public Map<UserDTO, List<TodoResponseDTO>> getUserTodoMap() {
-        Map<UserDTO, List<TodoResponseDTO>> userTodoMap = new HashMap<>();
+    public Map<UserDto, List<TodoResponseDto>> getUserTodoMap() {
+        Map<UserDto, List<TodoResponseDto>> userTodoMap = new HashMap<>();
 
         List<Todo> todoList = todoRepository.findAll(Sort.by(Sort.Direction.DESC, "createDate")); // 작성일 기준 내림차순
 
         todoList.forEach(todo -> {
-            var userDto = new UserDTO(todo.getUser());
-            var todoDto = new TodoResponseDTO(todo);
+            var userDto = new UserDto(todo.getUser());
+            var todoDto = new TodoResponseDto(todo);
             if (userTodoMap.containsKey(userDto)) {
                 // 유저 할일목록에 항목을 추가
                 userTodoMap.get(userDto).add(todoDto);
@@ -54,28 +54,28 @@ public class TodoService {
     }
 
     @Transactional
-    public TodoResponseDTO updateTodo(Long todoId, TodoRequestDTO todoRequestDTO, User user) {
+    public TodoResponseDto updateTodo(Long todoId, TodoRequestDto todoRequestDTO, User user) {
         Todo todo = getUserTodo(todoId, user);
 
         todo.setTitle(todoRequestDTO.getTitle());
         todo.setContent(todoRequestDTO.getContent());
 
-        return new TodoResponseDTO(todo);
+        return new TodoResponseDto(todo);
     }
 
     @Transactional
-    public TodoResponseDTO competeTodo(Long todoId, User user) {
+    public TodoResponseDto completeTodo(Long todoId, User user) {
         Todo todo = getUserTodo(todoId, user);
 
         todo.complete(); // 완료 처리
 
-        return new TodoResponseDTO(todo);
+        return new TodoResponseDto(todo);
     }
 
     public Todo getTodo(Long todoId) {
 
         return todoRepository.findById(todoId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 할일 ID 입니다."));
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 할일 ID 입니다."));
     }
 
     public Todo getUserTodo(Long todoId, User user) {

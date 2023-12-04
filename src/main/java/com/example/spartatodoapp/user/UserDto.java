@@ -1,14 +1,16 @@
 package com.example.spartatodoapp.user;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class UserDTO {
+@EqualsAndHashCode
+public class UserDto {
     private String username;
 
-    public UserDTO(User user) {
+    public UserDto(User user) {
         this.username = user.getUsername();
     }
 }
